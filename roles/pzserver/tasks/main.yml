@@ -1,0 +1,25 @@
+---
+- name: Create a system account named pzstadmin
+  user:
+    name: pzstadmin
+    shell: /bin/bash
+    state: present
+    createhome: yes
+    password: "{{ pzstadmin_password }}"
+  become: true
+
+- name: Create a system account named pzserver1
+  user:
+    name: pzserver1
+    shell: /bin/bash
+    state: present
+    createhome: yes
+    password: "{{ pzserver1_password }}"
+  become: true  
+
+- name: Clone pz-server-tools repository 
+  git:
+    repo: https://github.com/quarantin/pz-server-tools.git
+    dest: /home/pzstadmin/pz-server-tools
+  become: true
+  become_user: pzstadmin
